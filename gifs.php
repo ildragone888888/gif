@@ -62,8 +62,8 @@ $fset = strrev($fset);
   $fset = "$img$fset";
 	if ($nomer == 1)
 	{	
+$contents = "$fset|/-|$nomer";
 $fset = "$fset|/-|$nomer";
-$contents = "$fset|/-|$nomer";	
 	}		 
 fputs($f,$fset);
 fclose($f);
