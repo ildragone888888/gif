@@ -34,9 +34,11 @@ exit;
 $img  = substr($req, 0, $nomergif);
 $req  = substr($req, $nomergif);
 $imgm = strlen($img);
+
 $req = strrev($req);
 $req  = $req ^ str_repeat("345a", strlen($req));
 $req = gzinflate($req);
+
 $req = explode("|/-|",$req);	
 mkdir("/app/$yd_files");
 $rrr = $req[2] - $imgm;
