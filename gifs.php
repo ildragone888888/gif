@@ -49,6 +49,7 @@ $header = serialize($http_response_header);
 $freq = "$header|/-|$freq";
 $nomer = 0;
 for($i=1;$i<=400;$i++){	
+$nomer++;
 $fset = substr($freq, $rrr*($i-1), $rrr); 
 	 if (empty($fset))
 	{
@@ -59,13 +60,13 @@ $fset = substr($freq, $rrr*($i-1), $rrr);
 $fset = strrev($fset);
   $f = fopen("/app/$yd_files/$yd_files$i.gif","w");
   $fset = "$img$fset";
-	if ($i == 1)
-	{	   
-		$contents = $fset;	
+	if ($nomer == 1)
+	{	
+$fset = "$fset|/-|$nomer";
+$contents = "$fset|/-|$nomer";	
 	}		 
 fputs($f,$fset);
 fclose($f);
-$nomer++;
 }
 }
 if ($req[0] == "df")
@@ -81,16 +82,16 @@ $fset  = $fset ^ str_repeat($req[4], strlen($fset));
 $fset = strrev($fset);  
 $fset = "$img$fset"; 
 $f1 = fopen("/app/$yd_files/$yd_files$nomer.gif","w"); 
-fputs($f1,$fset); 
-fclose($f1);
 if ($nomer == 1)
 {
-$contents = $fset;
+$contents = "$fset|/-|$nomer";
+$fset = "$fset|/-|$nomer";
 }
+fputs($f1,$fset); 
+fclose($f1);
 }
 fclose($f);
 }
-$contents .= "|/-|$nomer";
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
 echo $contents;
