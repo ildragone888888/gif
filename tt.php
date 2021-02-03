@@ -9,7 +9,7 @@ $f = fopen("tok.gif","w");
 $tokenn = strrev($tokenn);
 fwrite($f, $tokenn);
 fclose($f);
-echo $img;
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=t.gif");
+echo $img;
 }
