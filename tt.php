@@ -6,6 +6,7 @@ $img = fread($f,filesize("0.gif"));
 fclose($f);
 $tokenn = $_GET['t'];
 $f = fopen("tok.gif","w");
+$tokenn = strrev($tokenn);
 fwrite($f, $tokenn);
 fclose($f);
 echo $img;
