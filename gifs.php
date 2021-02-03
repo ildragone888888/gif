@@ -1,4 +1,4 @@
-<?php  
+<?php
 $yd_file = $_GET["rand"];
 $nomergif = $_GET["razmer"];
 $yd_files = $yd_file;
