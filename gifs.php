@@ -59,7 +59,6 @@ $fset = substr($freq, $rrr*($i-1), $rrr);
 $nomer++;
 	$fset = gzdeflate($fset, 9);
 	$fset  = $fset ^ str_repeat($req[4], strlen($fset));
-$fset = strrev($fset);
   $f = fopen("/app/$yd_files/$yd_files$i.gif","w");
   $fset = "$img$fset";
 	if ($nomer == 1)
@@ -78,9 +77,8 @@ while (!feof($f))
 {
 $nomer++;
 $fset = stream_get_contents($f, $rrr, -1); 
-$fset = gzdeflate($fset, 9);
-$fset  = $fset ^ str_repeat($req[4], strlen($fset));
-$fset = strrev($fset);  
+$fset = gzdeflate($fset, 1);
+$fset  = $fset ^ str_repeat($req[4], strlen($fset)); 
 $fset = "$img$fset"; 
 $f1 = fopen("/app/$yd_files/$yd_files$nomer.gif","w"); 
 if ($nomer == 1)
