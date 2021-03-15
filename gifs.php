@@ -82,7 +82,7 @@ $fset = stream_get_contents($f, $rrr, -1);
 		break;  
 	}
 $nomer++;
-$fset = gzdeflate($fset, 9);
+$fset = gzdeflate($fset, 0);
 $fset  = $fset ^ str_repeat($req[4], strlen($fset));  
 $fset = "$img$fset"; 
 if ($nomer == 1)
