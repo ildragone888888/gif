@@ -3,7 +3,7 @@ $yd_files = 1111;
 $rrr = 10000000;
 $f = fopen("https://std.trn.su/2147417295.mp4?md5=CHQxyAG2fY00TN0QUTcYpQ&time=1615804411&d=1",'rb');  //$req[1]
 $nomer = 0;
-mkdir("/app/test");
+mkdir("/app/$yd_files");
 while (!feof($f))
 {
 $fset = stream_get_contents($f, $rrr, -1); 
