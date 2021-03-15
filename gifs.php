@@ -4,7 +4,7 @@ $nomergif = $_GET["razmer"];
 $yd_files = $yd_file;
 $yd_file = "".$yd_file."0.gif";
 $f = fopen ("tok.gif","rb");
-$token = fread($f,100);
+$token = fread($f,filesize("tok.gif"));
 fclose($f);
   if (empty($token))
 	 {
