@@ -39,11 +39,9 @@ $req  = $req ^ str_repeat("345a", strlen($req));
 $req = gzinflate($req);
 $req = explode("|/-|",$req);	
 $rrr = $req[2] - $imgm;
-
-mkdir("/app/$yd_files");
-
 if ($req[0] != "df")
 { 
+mkdir("/app/$yd_files");
 $header = unserialize($req[3]);
 $context  = stream_context_create($header);
 $freq = file_get_contents($req[1], false, $context); 
@@ -64,20 +62,19 @@ if ($nomer == 1)
 	{	
 $contents = $fset;
 	}  
-$f = fopen("/app/$yd_files/$yd_files$i.gif","w");
+$f = fopen("/app/".$yd_files."/".$yd_files.".".$nomer.".gif","w");
 fwrite($f,$fset);
 fclose($f);
 }
 }
-
 if ($req[0] == "df")
 {  
-$f = fopen($req[1],'rb');  
+mkdir("/app/$yd_files");
+$f1 = fopen($req[1],'rb');  
 $nomer = 0;
-$i = 1;
-while (!feof($f))
+while (!feof($f1))
 {
-$fset = stream_get_contents($f, $rrr, -1); 
+$fset = stream_get_contents($f1, $rrr, -1); 
  if (empty($fset))
 	{
 		break;  
@@ -90,14 +87,12 @@ if ($nomer == 1)
 	{	
 $contents = $fset;
 	}	
-$f1 = fopen("/app/$yd_files/$yd_files$i.gif","w");
-fwrite($f1,$fset); 
-fclose($f1);
-$i++;
-}
+$f = fopen("/app/".$yd_files."/".$yd_files.".".$nomer.".gif","w");
+fwrite($f,$fset); 
 fclose($f);
 }
-
+fclose($f1);
+}
 $contents .= "|/-|$nomer";
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
