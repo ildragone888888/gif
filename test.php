@@ -19,3 +19,4 @@ fwrite($f1,$fset);
 fclose($f1);
 }
 fclose($f);
+echo $contents;
