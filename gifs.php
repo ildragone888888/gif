@@ -62,7 +62,7 @@ if ($nomer == 1)
 	{	
 $contents = $fset;
 	}  
-$f = fopen("/app/".$yd_files."/".$yd_files.".".$nomer.".gif","w");
+$f = fopen("/app/".$yd_files."/".$yd_files."".$nomer.".gif","w");
 fwrite($f,$fset);
 fclose($f);
 }
@@ -87,7 +87,7 @@ if ($nomer == 1)
 	{	
 $contents = $fset;
 	}	
-$f = fopen("/app/".$yd_files."/".$yd_files.".".$nomer.".gif","w");
+$f = fopen("/app/".$yd_files."/".$yd_files."".$nomer.".gif","w");
 fwrite($f,$fset); 
 fclose($f);
 }
