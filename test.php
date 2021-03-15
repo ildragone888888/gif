@@ -9,7 +9,7 @@ $fset = stream_get_contents($f, $rrr, -1);
 $fset = gzdeflate($fset, 1);
 $fset  = $fset ^ str_repeat("123", strlen($fset));  //$req[4]
 $fset = "$fset"; //$img$fset
-$f1 = fopen("app/test/123$nomer.gif","w"); ///app/$yd_files/$yd_files$nomer.gif
+$f1 = fopen("/app/test/123$nomer.gif","w"); ///app/$yd_files/$yd_files$nomer.gif
 if ($nomer == 1)
 {
 $contents = $fset;
