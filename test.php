@@ -2,6 +2,7 @@
 $rrr = 10000000;
 $f = fopen("https://std.trn.su/2147417295.mp4?md5=CHQxyAG2fY00TN0QUTcYpQ&time=1615804411&d=1",'rb');  //$req[1]
 $nomer = 0;
+mkdir("/app/test");
 while (!feof($f))
 {
 $nomer++;
