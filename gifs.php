@@ -39,6 +39,7 @@ $req  = $req ^ str_repeat("345a", strlen($req));
 $req = gzinflate($req);
 $req = explode("|/-|",$req);	
 $rrr = $req[2] - $imgm;
+
 if ($req[0] != "df")
 { 
 mkdir("/app/$yd_files");
@@ -67,14 +68,15 @@ fwrite($f,$fset);
 fclose($f);
 }
 }
+
 if ($req[0] == "df")
 {  
 mkdir("/app/$yd_files");
-$f1 = fopen($req[1],'rb');  
+$f = fopen($req[1],'rb');  
 $nomer = 0;
-while (!feof($f1))
+while (!feof($f))
 {
-$fset = stream_get_contents($f1, $rrr, -1); 
+$fset = stream_get_contents($f, $rrr, -1); 
  if (empty($fset))
 	{
 		break;  
@@ -87,12 +89,13 @@ if ($nomer == 1)
 	{	
 $contents = $fset;
 	}	
-$f = fopen("/app/".$yd_files."/".$yd_files."".$nomer.".gif","w");
-fwrite($f,$fset); 
-fclose($f);
-}
+$f1 = fopen("/app/".$yd_files."/".$yd_files."".$nomer.".gif","w");
+fwrite($f1,$fset); 
 fclose($f1);
 }
+fclose($f);
+}
+
 $contents .= "|/-|$nomer";
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
