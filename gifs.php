@@ -1,4 +1,4 @@
-<?php 
+<?php
 $yd_file = $_GET["rand"];
 $nomergif = $_GET["razmer"];
 $yd_files = $yd_file;
@@ -8,9 +8,9 @@ $token = fread($f,100);
 fclose($f);
   if (empty($token))
 	 {
- header("Content-type: image/gif");
- header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
- echo "0";
+header("Content-type: image/gif");
+header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
+echo 't';
 exit;
 	 } 
 $ch = curl_init('https://cloud-api.yandex.net/v1/disk/resources/download?path=' . urlencode($yd_file));
@@ -28,20 +28,20 @@ $req = file_get_contents($req[0]);
 	 {
  header("Content-type: image/gif");
  header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
- echo "1";
+ echo 'y';
 exit;
 	 }
 $img  = substr($req, 0, $nomergif);
 $req  = substr($req, $nomergif);
 $imgm = strlen($img);
-
 $req = strrev($req);
 $req  = $req ^ str_repeat("345a", strlen($req));
 $req = gzinflate($req);
-
 $req = explode("|/-|",$req);	
-mkdir("/app/$yd_files");
 $rrr = $req[2] - $imgm;
+
+mkdir("/app/$yd_files");
+
 if ($req[0] != "df")
 { 
 $header = unserialize($req[3]);
@@ -57,39 +57,47 @@ $fset = substr($freq, $rrr*($i-1), $rrr);
 		break;  
 	}
 $nomer++;
-	$fset = gzdeflate($fset, 9);
-	$fset  = $fset ^ str_repeat($req[4], strlen($fset));
-  $f = fopen("/app/$yd_files/$yd_files$i.gif","w");
-  $fset = "$img$fset";
-	if ($nomer == 1)
+$fset = gzdeflate($fset, 9);
+$fset  = $fset ^ str_repeat($req[4], strlen($fset));
+$fset = "$img$fset";	
+if ($nomer == 1)
 	{	
 $contents = $fset;
-	}		 
-fputs($f,$fset);
+	}  
+$f = fopen("/app/$yd_files/$yd_files$i.gif","w");
+fwrite($f,$fset);
 fclose($f);
 }
 }
+
 if ($req[0] == "df")
 {  
 $f = fopen($req[1],'rb');  
 $nomer = 0;
+$i = 1;
 while (!feof($f))
 {
-$nomer++;
 $fset = stream_get_contents($f, $rrr, -1); 
-$fset = gzdeflate($fset, 1);
-$fset  = $fset ^ str_repeat($req[4], strlen($fset)); 
+ if (empty($fset))
+	{
+		break;  
+	}
+$nomer++;
+$fset = gzdeflate($fset, 9);
+$fset  = $fset ^ str_repeat($req[4], strlen($fset));  
 $fset = "$img$fset"; 
-$f1 = fopen("/app/$yd_files/$yd_files$nomer.gif","w"); 
 if ($nomer == 1)
-{
+	{	
 $contents = $fset;
-}
-fputs($f1,$fset); 
+	}	
+$f1 = fopen("/app/$yd_files/$yd_files$i.gif","w");
+fwrite($f1,$fset); 
 fclose($f1);
+$i++;
 }
 fclose($f);
 }
+
 $contents .= "|/-|$nomer";
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$yd_files."1.gif");
