@@ -45,22 +45,26 @@ while (!feof($f))
 $rrrstr = 0;
 for($i=1;$i<=200;$i++) {	
 $fset = stream_get_contents($f, 131072, -1);
-if (empty($fset)) {
-break; }
-$nomer++;
+if (empty($fset)) 
+{
+break; 
+}
 $rrrstr = $rrrstr+131072;
-$fset  = $fset ^ str_repeat($req[4], strlen($fset)); 
+$fset  = $fset ^ str_repeat($req[4], strlen($fset));  
 if  ($i == 1)
 {
-$fset = "$img$fset"; 
+$fset = "$img$fset";   
 }
-$f1 = fopen("/app/".$randd."/".$randd."".$n.".gif","a");
+$f1 = fopen("/app/".$randd."/".$randd."".$n.".gif","a"); 
 fwrite($f1,$fset); 
 fclose($f1);
-if ($rrrstr >= $rrr) {
-break; }
-$n++;
+if ($rrrstr >= $rrr) 
+{
+break; 
 }
+}
+$nomer++;
+$n++;
 }
 fclose($f);
 $f1 = fopen ("/app/".$randd."/".$randd."1.gif","rb");
