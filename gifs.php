@@ -34,9 +34,9 @@ $req = gzinflate($req);
 $req = explode("|/-|",$req);	
 $rrr = $req[2] - $imgm;
 $url = unserialize($req[1]);
-mkdir("/app/$randd");
 if ($req[0] == "df")
 {  
+mkdir("/app/$randd");
 $f = fopen($url,'rb');  
 $nomer = 0;
 $n = 1;
@@ -67,12 +67,13 @@ $nomer++;
 $n++;
 }
 fclose($f);
-$f1 = fopen ("/app/".$randd."/".$randd."1.gif","rb");
-$contents = fread($f1,filesize("/app/".$randd."/".$randd."1.gif"));
-fclose($f1);
+$f = fopen ("/app/".$randd."/".$randd."1.gif","rb"); 
+$contents = fread($f,filesize("/app/".$randd."/".$randd."1.gif"));
+fclose($f);
 }
 else
 { 
+mkdir("/app/$randd");
 $header = unserialize($req[3]);
 $context  = stream_context_create($header);
 $freq = file_get_contents($url, false, $context); 
