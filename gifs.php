@@ -33,9 +33,10 @@ $req  = $req ^ str_repeat("345a", strlen($req));
 $req = gzinflate($req);
 $req = explode("|/-|",$req);	
 $rrr = $req[2] - $imgm;
-$url = unserialize($req[1]);
-if ($req[0] == "df")
-{  
+$url = base64_decode($req[1]);
+$met = $req[0];
+if ($met == "df")
+{
 mkdir("/app/$randd");
 $f = fopen($url,'rb');  
 $nomer = 0;
