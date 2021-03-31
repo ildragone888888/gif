@@ -39,7 +39,7 @@ if ($req[0] == "df")
 {  
 $f = fopen($url,'rb');  
 $nomer = 0;
-$n=1;
+$n = 1;
 while (!feof($f))
 {
 $rrrstr = 0;
