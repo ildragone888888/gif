@@ -9,7 +9,7 @@ fclose($f);
 if (empty($token)){
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$randd."1.gif");
-echo 't'; exit; } 
+echo 'nt'; exit; } 
 $ch = curl_init('https://cloud-api.yandex.net/v1/disk/resources/download?path=' . urlencode($rand));
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: OAuth ' . $token));
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -24,27 +24,31 @@ $req = file_get_contents($req[0]);
 if (empty($req)){ 
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$randd."1.gif");
-echo 'y'; exit; }
+echo 'ny'; exit; }
 $img  = substr($req, 0, $nomergif);
 $req  = substr($req, $nomergif);
 $imgm = strlen($img);
 $req = strrev($req);
 $req  = $req ^ str_repeat("345a", strlen($req));
 $req = gzinflate($req);
-$req = explode("|/-|",$req);	
+$req = explode("/-|",$req);	
 $rrr = $req[2] - $imgm;
 $url = base64_decode($req[1]);
 $met = $req[0];
-if ($met == "df")
-{
+$contenttype = $req[5];
+$contenttype = explode("%-|",$contenttype);
+$razr = $contenttype[1];
 mkdir("/app/$randd");
+if ($met == 'df')
+{
 $f = fopen($url,'rb');  
 $nomer = 0;
 $n = 1;
 while (!feof($f))
 {
 $rrrstr = 0;
-for($i=1;$i<=200;$i++) {	
+$f1 = fopen("/app/".$randd."/".$randd."".$n.".".$razr."","a"); 
+for($i=1;$i<=400;$i++) {	
 $fset = stream_get_contents($f, 131072, -1);
 if (empty($fset)) 
 {
@@ -56,48 +60,50 @@ if  ($i == 1)
 {
 $fset = "$img$fset";   
 }
-$f1 = fopen("/app/".$randd."/".$randd."".$n.".gif","a"); 
-fwrite($f1,$fset); 
-fclose($f1);
+fwrite($f1,$fset);
 if ($rrrstr >= $rrr) 
 {
 break; 
 }
 }
+fclose($f1);
 $nomer++;
 $n++;
 }
 fclose($f);
-$f = fopen ("/app/".$randd."/".$randd."1.gif","rb"); 
-$contents = fread($f,filesize("/app/".$randd."/".$randd."1.gif"));
-fclose($f);
+$f3 = fopen ("/app/".$randd."/".$randd."1.".$razr."","rb"); 
+$contents = fread($f3,filesize("/app/".$randd."/".$randd."1.".$razr.""));
+fclose($f3);
 }
 else
 { 
-mkdir("/app/$randd");
 $header = unserialize($req[3]);
 $context  = stream_context_create($header);
 $freq = file_get_contents($url, false, $context); 
 $header = serialize($http_response_header);
-$freq = "$header|/-|$freq";
+$freq = "$header/-|$freq";
 $nomer = 0;
 for($i=1;$i<=400;$i++){	
 $fset = substr($freq, $rrr*($i-1), $rrr); 
-if (empty($fset)) {
-break; }
+if (empty($fset)) 
+{
+break; 
+}
 $nomer++;
 $fset = gzdeflate($fset, 9);
 $fset  = $fset ^ str_repeat($req[4], strlen($fset));
 $fset = "$img$fset";	 
-$f = fopen("/app/".$randd."/".$randd."".$nomer.".gif","w");
+$f = fopen("/app/".$randd."/".$randd."".$nomer.".".$razr."","w");
 fwrite($f,$fset);
 fclose($f);
 }
-$f1 = fopen ("/app/".$randd."/".$randd."1.gif","rb");
-$contents = fread($f1,filesize("/app/".$randd."/".$randd."1.gif"));
+$f1 = fopen ("/app/".$randd."/".$randd."1.".$razr."","rb");
+$contents = fread($f1,filesize("/app/".$randd."/".$randd."1.".$razr.""));
 fclose($f1);
 }
-$contents .= "|/-|$nomer";
-header("Content-type: image/gif");
-header("Content-Disposition: attachment; filename=".$randd."1.gif");
+$nomer = base64_encode($nomer);
+$nomer = gzdeflate($nomer, 9);
+$contents .= "/-|$nomer";
+header("Content-type: ".$contenttype[0]."");
+header("Content-Disposition: attachment; filename=".$randd."1.".$razr."");
 echo $contents;
