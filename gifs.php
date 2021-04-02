@@ -1,9 +1,7 @@
-<?php
+<?php 
 function rep($x)
-{
-$x = base_convert($x, 10, 26);
-return $x;
-}
+{ $x = base_convert($x, 10, 26);
+return $x; }
 $rand = $_GET["rand"];
 $nomergif = $_GET["razmer"];
 $randdrep1 = "".$rand."1";
@@ -47,34 +45,26 @@ $contenttype = $req[5];
 $contenttype = explode("%-|",$contenttype);
 $razr = $contenttype[1];
 mkdir("/app/$rand");
-if ($met == 'df')
-{
+if ($met == 'df') {
 $f = fopen($url,'rb');  
 $nomer = 0;
 $n = 1;
-while (!feof($f))
-{
+while (!feof($f)) {
 $rrrstr = 0;
 $randdrepn = "$rand$n";
 $randdrepn = rep($randdrepn);
 $f1 = fopen("/app/".$rand."/".$randdrepn.".".$razr."","a"); 
 for($i=1;$i<=400;$i++) {	
 $fset = stream_get_contents($f, 131072, -1);
-if (empty($fset)) 
-{
-break; 
-}
+if (empty($fset)) {
+break; }
 $rrrstr = $rrrstr+131072;
 $fset  = $fset ^ str_repeat($req[4], strlen($fset));  
-if  ($i == 1)
-{
-$fset = "$img$fset";   
-}
+if  ($i == 1) {
+$fset = "$img$fset"; }
 fwrite($f1,$fset);
-if ($rrrstr >= $rrr) 
-{
-break; 
-}
+if ($rrrstr >= $rrr) {
+break; }
 }
 fclose($f1);
 $nomer++;
@@ -97,25 +87,21 @@ for($i=1;$i<=400;$i++){
 $randdrepn = "$rand$i";
 $randdrepn = rep($randdrepn);
 $fset = substr($freq, $rrr*($i-1), $rrr); 
-if (empty($fset)) 
-{
-break; 
-}
+if (empty($fset)) {
+break; }
 $nomer++;
 $fset = gzdeflate($fset, 9);
 $fset  = $fset ^ str_repeat($req[4], strlen($fset));
 $fset = "$img$fset";
 $f = fopen("/app/".$rand."/".$randdrepn.".".$razr."","w");
 fwrite($f,$fset);
-fclose($f);
-}
+fclose($f); }
 $f1 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
 $contents = fread($f1,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f1);
-}
+fclose($f1); }
 $nomer = base64_encode($nomer);
 $nomer = gzdeflate($nomer, 9);
 $contents .= "/-|$nomer";
 header("Content-type: ".$contenttype[0]."");
 header("Content-Disposition: attachment; filename=".$randdrep1.".".$razr."");
-echo $contents;
+print($contents); 
