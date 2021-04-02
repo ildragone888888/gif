@@ -104,4 +104,4 @@ $nomer = gzdeflate($nomer, 9);
 $contents .= "/-|$nomer";
 header("Content-type: ".$contenttype[0]."");
 header("Content-Disposition: attachment; filename=".$randdrep1.".".$razr."");
-print $contents; 
+echo $contents; 
