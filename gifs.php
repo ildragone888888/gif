@@ -82,6 +82,7 @@ else {
 $__content__ = '';
 $freq = '';
 function echo_content($content) {
+global $freq;
 $freq .= $content;
 }
 function curl_header_function($ch, $header) {
