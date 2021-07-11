@@ -78,9 +78,6 @@ $f3 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
 $contents = fread($f3,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
 fclose($f3);
 }
-
-
-
 else { 
 $__content__ = '';
 $freq = '';
@@ -110,7 +107,7 @@ $__content__ = '';
 echo_content($content);
 return strlen($content);
 }
-function post($method, $url, $headers, $body) {
+function post($met, $url, $headers, $body) {
 if (isset($headers['Connection'])) { $headers['Connection'] = 'close'; }
 $header_array = array();
 foreach ($headers as $key => $value) {
@@ -119,7 +116,7 @@ $header_array[] = join('-', array_map('ucfirst', explode('-', $key))).': '.$valu
 $curl_opt = array();
 $ch = curl_init();
 $curl_opt[CURLOPT_URL] = $url;
-switch (strtoupper($method)) {  
+switch (strtoupper($met)) {  
 case 'HEAD':
 $curl_opt[CURLOPT_NOBODY] = true;
 break;
@@ -131,16 +128,16 @@ $curl_opt[CURLOPT_POSTFIELDS] = $body;
 break;
 case 'DELETE':
 case 'PATCH':
-$curl_opt[CURLOPT_CUSTOMREQUEST] = $method;
+$curl_opt[CURLOPT_CUSTOMREQUEST] = $met;
 $curl_opt[CURLOPT_POSTFIELDS] = $body;
 break;
 case 'PUT':
-$curl_opt[CURLOPT_CUSTOMREQUEST] = $method;
+$curl_opt[CURLOPT_CUSTOMREQUEST] = $met;
 $curl_opt[CURLOPT_POSTFIELDS] = $body;
 $curl_opt[CURLOPT_NOBODY] = true; 
 break;
 case 'OPTIONS':
-$curl_opt[CURLOPT_CUSTOMREQUEST] = $method;
+$curl_opt[CURLOPT_CUSTOMREQUEST] = $met;
 break;
 default:
 echo_content("HTTP/1.0 502\r\n\r\n" . message_html('502 Urlfetch Error', 'Method error ' . $method,  $url));
