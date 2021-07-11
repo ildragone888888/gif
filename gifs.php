@@ -1,6 +1,6 @@
 <?php 
 function rep($x) { 
-$x = base_convert($x, 10, 26);
+$x = base_convert($x, 26, 10);
 return $x; }
 $rand = $_GET["rand"];
 $nomergif = $_GET["razmer"];
