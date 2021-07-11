@@ -78,6 +78,9 @@ $f3 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
 $contents = fread($f3,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
 fclose($f3);
 }
+
+
+
 else { 
 $__content__ = '';
 $freq = '';
@@ -180,11 +183,13 @@ fwrite($f,$fset);
 fclose($f); }
 $f1 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
 $contents = fread($f1,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f1); }
+fclose($f1); 
+}
+
 $nomer = str_pad($nomer, 3, "0", STR_PAD_LEFT);
 $nomer  = $nomer ^ str_repeat($req[4], strlen($nomer));
 $nomer = strrev($nomer);
-$contents = "".$nomer."\r\n".$contents."";
+$contents = "".$contents."|)|</".$nomer.";
 header("Content-type: ".$contenttype[0]."");
 header("Content-Disposition: attachment; filename=".$randdrep1.".".$razr."");
 echo $contents;  
