@@ -1,6 +1,6 @@
 <?php 
 function rep($x) { 
-$x = base_convert($x, 26, 10);
+$x = base_convert($x, 10, 26);
 return $x; }
 $rand = $_GET["rand"];
 $nomergif = $_GET["razmer"];
@@ -43,7 +43,7 @@ $url = unserialize($req[1]);
 $contenttype = $req[5];
 $contenttype = explode("%-|",$contenttype);
 $razr = $contenttype[1];
-mkdir("/app/$rand");
+mkdir("/app/".$rand."");
 if ($met == 'df') {
 $f = fopen($url,'rb');  
 $nomer = 0;
