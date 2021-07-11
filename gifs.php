@@ -189,7 +189,7 @@ fclose($f1);
 $nomer = str_pad($nomer, 3, "0", STR_PAD_LEFT);
 $nomer  = $nomer ^ str_repeat($req[4], strlen($nomer));
 $nomer = strrev($nomer);
-$contents = "".$contents."|)|</".$nomer.";
+$contents = "".$contents."|)|</".$nomer."";
 header("Content-type: ".$contenttype[0]."");
 header("Content-Disposition: attachment; filename=".$randdrep1.".".$razr."");
 echo $contents;  
