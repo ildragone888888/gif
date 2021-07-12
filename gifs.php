@@ -139,7 +139,7 @@ default:
 echo_content("HTTP/1.0 502\r\n\r\n" . message_html('502 Urlfetch Error', 'Method error ' . $method,  $url));
 exit(-1);
 }
-$curl_opt[CURLOPT_HTTPHEADER] = $header_array;
+$curl_opt[CURLOPT_HTTPHEADER] = $headers;
 $curl_opt[CURLOPT_RETURNTRANSFER] = true;
 $curl_opt[CURLOPT_BINARYTRANSFER] = true;
 $curl_opt[CURLOPT_HEADER] = false;
@@ -160,11 +160,9 @@ echo_content($GLOBALS['__content__']);
 $headers = unserialize($req[3]);
 $body = unserialize($req[6]);
 
-mkdir("/app/test");
-$f = fopen("/app/test/0.txt","w");
-fwrite($f, "".$met."\r\n".$url."\r\n".serialize($headers)."\r\n".serialize($body)."\r\n");
-fclose($f);
+ 
 post($met, $url, $headers, $body);
+mkdir("/app/test");
 $f = fopen("/app/test/1.txt","w");
 fwrite($f,$freq);
 fclose($f);
