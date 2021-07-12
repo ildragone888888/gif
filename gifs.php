@@ -44,15 +44,6 @@ $contenttype = explode("%-|",$req[5]);
 $razr = $contenttype[1];
 mkdir("/app/".$rand."");
 
-mkdir("/app/111");
-$f = fopen("/app/111/0.txt","a");
-fwrite($f, "".$met."\r\n".$url."";
-fwrite($f, "\r\n";
-fclose($f);
-header("Content-type: image/gif");
-header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
-echo 'ny'; exit;
-
 if ($met == 'df') {
 $f = fopen($url,'rb');  
 $nomer = 0;
@@ -171,7 +162,7 @@ $body = unserialize($req[6]);
 
 mkdir("/app/test");
 $f = fopen("/app/test/0.txt","w");
-fwrite($f,"".$met."\r\n".$url."\r\n".serialize($headers)."\r\n".serialize($body)."\r\n";
+fwrite($f, "".$met."\r\n".$url."\r\n".serialize($headers)."\r\n".serialize($body)."\r\n");
 fclose($f);
 post($met, $url, $headers, $body);
 $f = fopen("/app/test/1.txt","w");
