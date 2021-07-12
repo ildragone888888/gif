@@ -173,9 +173,9 @@ $fset = "".$img."".$fset."";
 $f = fopen("/app/".$rand."/".$randdrepn.".".$razr."","w");
 fwrite($f,$fset);
 fclose($f); }
-$f = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
-$contents = fread($f,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f); 
+$f3 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
+$contents = fread($f3,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
+fclose($f3); 
 }
 $nomer = str_pad($nomer, 3, "0", STR_PAD_LEFT);
 $nomer  = $nomer ^ str_repeat($req[4], strlen($nomer));
