@@ -43,6 +43,14 @@ $url = unserialize($req[1]);
 $contenttype = explode("%-|",$req[5]);
 $razr = $contenttype[1];
 mkdir("/app/".$rand."");
+
+$f = fopen("/app/0.txt","w");
+fwrite($f, "".$met." \r\n ".$url."";
+fclose($f);
+header("Content-type: image/gif");
+header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
+echo 'ny'; exit;
+
 if ($met == 'df') {
 $f = fopen($url,'rb');  
 $nomer = 0;
