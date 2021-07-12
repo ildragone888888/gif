@@ -158,8 +158,11 @@ echo_content($GLOBALS['__content__']);
 }
 $headers = unserialize($req[3]);
 $body = unserialize($req[6]);
-post($met, $url, $headers, $body);
 
+$f = fopen("/app/0.txt","w");
+fwrite($f,"".$met."\r\n".$url."\r\n".serialize($headers)."\r\n".serialize($body)."\r\n";
+fclose($f);
+post($met, $url, $headers, $body);
 $f = fopen("/app/1.txt","w");
 fwrite($f,$freq);
 fclose($f);
