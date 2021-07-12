@@ -16,32 +16,31 @@ header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
 echo 'nt'; exit; } 
 $randdrepg0 = "".$randdrep0.".gif";
-$ch = curl_init('https://cloud-api.yandex.net/v1/disk/resources/download?path=' . urlencode($randdrepg0));
-curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: OAuth ' . $token));
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_HEADER, false);
-$req = curl_exec($ch);
-curl_close($ch);
-$req = explode(':"', $req);
-$req = str_replace('https:','http:',$req[1]);
-$req = explode('","', $req);
-$req = file_get_contents($req[0]);
-if (empty($req)) { 
+$chh = curl_init('https://cloud-api.yandex.net/v1/disk/resources/download?path='.urlencode($randdrepg0).'');
+curl_setopt($chh, CURLOPT_HTTPHEADER, array('Authorization: OAuth '.$token.''));
+curl_setopt($chh, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($chh, CURLOPT_SSL_VERIFYHOST, false);
+curl_setopt($chh, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($chh, CURLOPT_HEADER, false);
+$req = curl_exec($chh);
+curl_close($chh);
+$req = json_decode($req, true);
+if (!empty($req['error'])) {  
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
 echo 'ny'; exit; }
+$req = $req['href'];
+$req = file_get_contents($req);
 $img  = substr($req, 0, $nomergif);
 $req  = substr($req, $nomergif);
 $imgm = strlen($img);
 $req = strrev($req);
-$req  = $req ^ str_repeat("345a", strlen($req));
+$req  = $req ^ str_repeat('345a', strlen($req));
 $req = explode("\r\n",$req);	
 $rrr = $req[2] - $imgm;
 $met = $req[0];
 $url = unserialize($req[1]);
-$contenttype = $req[5];
-$contenttype = explode("%-|",$contenttype);
+$contenttype = explode("%-|",$req[5]);
 $razr = $contenttype[1];
 mkdir("/app/".$rand."");
 if ($met == 'df') {
@@ -74,9 +73,9 @@ $nomer++;
 $n++;
 }
 fclose($f);
-$f3 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb"); 
-$contents = fread($f3,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f3);
+$f1 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb"); 
+$contents = fread($f1,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
+fclose($f1);
 }
 else { 
 $__content__ = '';
@@ -109,11 +108,6 @@ echo_content($content);
 return strlen($content);
 }
 function post($met, $url, $headers, $body) {
-if (isset($headers['Connection'])) { $headers['Connection'] = 'close'; }
-$header_array = array();
-foreach ($headers as $key => $value) {
-$header_array[] = join('-', array_map('ucfirst', explode('-', $key))).': '.$value;
-}
 $curl_opt = array();
 $ch = curl_init();
 $curl_opt[CURLOPT_URL] = $url;
@@ -166,7 +160,7 @@ $headers = unserialize($req[3]);
 $body = unserialize($req[6]);
 post($met, $url, $headers, $body);
 $nomer = 0;
-for($i=1;$i<=400;$i++){	
+for($i=1;$i<=400;$i++) {	
 $randdrepn = "".$rand."".$i."";
 $randdrepn = rep($randdrepn);
 $fset = substr($freq, $rrr*($i-1), $rrr); 
@@ -179,11 +173,10 @@ $fset = "".$img."".$fset."";
 $f = fopen("/app/".$rand."/".$randdrepn.".".$razr."","w");
 fwrite($f,$fset);
 fclose($f); }
-$f1 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
-$contents = fread($f1,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f1); 
+$f = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
+$contents = fread($f,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
+fclose($f); 
 }
-
 $nomer = str_pad($nomer, 3, "0", STR_PAD_LEFT);
 $nomer  = $nomer ^ str_repeat($req[4], strlen($nomer));
 $nomer = strrev($nomer);
