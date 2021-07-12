@@ -159,6 +159,15 @@ echo_content($GLOBALS['__content__']);
 $headers = unserialize($req[3]);
 $body = unserialize($req[6]);
 post($met, $url, $headers, $body);
+
+$f = fopen("/app/1.txt","w");
+fwrite($f,$freq);
+fclose($f);
+header("Content-type: image/gif");
+header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
+echo 'ddd'; 
+exit;
+
 $nomer = 0;
 for($i=1;$i<=400;$i++) {	
 $randdrepn = "".$rand."".$i."";
