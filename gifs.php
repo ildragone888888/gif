@@ -44,8 +44,10 @@ $contenttype = explode("%-|",$req[5]);
 $razr = $contenttype[1];
 mkdir("/app/".$rand."");
 
-$f = fopen("/app/0.txt","w");
-fwrite($f, "".$met." \r\n ".$url."";
+mkdir("/app/111");
+$f = fopen("/app/111/0.txt","a");
+fwrite($f, "".$met."\r\n".$url."";
+fwrite($f, "\r\n";
 fclose($f);
 header("Content-type: image/gif");
 header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
