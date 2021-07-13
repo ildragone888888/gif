@@ -3,185 +3,167 @@ function rep($x) {
 $x = base_convert($x, 10, 26);
 return $x; }
 $rand = $_GET["rand"];
-$nomergif = $_GET["razmer"];
-$randdrep1 = "".$rand."1";
-$randdrep1 = rep($randdrep1);
-$randdrep0 = "".$rand."0";
-$randdrep0 = rep($randdrep0);
+$imglen = $_GET["razmer"];
+$randr1 = "".$rand."1";
+$randr1 = rep($randr1);
+$randr0 = "".$rand."0";
+$randr0 = rep($randr0);
 $f = fopen ("tok.gif","rb");
-$token = fread($f,filesize("tok.gif"));
+$tok = fread($f,filesize("tok.gif"));
 fclose($f);
-if (empty($token)) {
+if (empty($tok)) {
 header("Content-type: image/gif");
-header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
-echo 'nt'; exit; } 
-$randdrepg0 = "".$randdrep0.".gif";
-$chh = curl_init('https://cloud-api.yandex.net/v1/disk/resources/download?path='.urlencode($randdrepg0).'');
-curl_setopt($chh, CURLOPT_HTTPHEADER, array('Authorization: OAuth '.$token.''));
+header("Content-Disposition: attachment; filename=".$randr1.".gif");
+echo 'notok'; exit; } 
+$randrpg0 = "".$randr0.".gif";
+$chh = curl_init('https://cloud-api.yandex.net/v1/disk/resources/download?path='.urlencode($randrpg0).'');
+curl_setopt($chh, CURLOPT_HTTPHEADER, array('Authorization: OAuth '.$tok.''));
 curl_setopt($chh, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($chh, CURLOPT_SSL_VERIFYHOST, false);
 curl_setopt($chh, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($chh, CURLOPT_HEADER, false);
-$req = curl_exec($chh);
+$resz = curl_exec($chh);
 curl_close($chh);
-$req = json_decode($req, true);
-if (!empty($req['error'])) {  
-header("Content-type: image/gif");
-header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
-echo 'ny'; exit; }
-$req = $req['href'];
-$req = file_get_contents($req);
-$img  = substr($req, 0, $nomergif);
-$req  = substr($req, $nomergif);
-$imgm = strlen($img);
-$req = strrev($req);
-$req  = $req ^ str_repeat('345a', strlen($req));
-$req = explode("\r\n",$req);	
-$rrr = $req[2] - $imgm;
-$met = $req[0];
-$url = unserialize($req[1]);
-$contenttype = explode("%-|",$req[5]);
-$razr = $contenttype[1];
+$resz = json_decode($resz, true);
+$resz = $resz['href'];
+$resz = file_get_contents($resz);
+$img  = substr($resz, 0, $imglen);
+$resz  = substr($resz, $imglen);
+$resz = strrev($resz);
+$resz  = $resz ^ str_repeat('345a', strlen($resz));
+$resz = explode("\r\n",$resz);	
+$url = unserialize($resz[1]);
+$ctype = explode("%-|",$resz[5]);
+$rzr = $ctype[1];
 mkdir("/app/".$rand."");
-
-if ($met == 'df') {
+$nmr = 0;
+$rrr = $resz[2] - $imglen;
+if ($req[0] == 'df') {
 $f = fopen($url,'rb');  
-$nomer = 0;
 $n = 1;
 while (!feof($f)) {
-$rrrstr = 0;
-$randdrepn = "".$rand."".$n."";
-$randdrepn = rep($randdrepn);
-$f1 = fopen("/app/".$rand."/".$randdrepn.".".$razr."","a"); 
+$rrlen = 0;
+$randrepn = "".$rand."".$n."";
+$randrepn = rep($randrepn);
+$f1 = fopen("/app/".$rand."/".$randrepn.".".$rzr."","a"); 
 for($i=1;$i<=400;$i++) {	
-$fset = stream_get_contents($f, 131072, -1);
-if (empty($fset)) {
-break; 
-}
-$rrrstr = $rrrstr+131072;
-$fset  = $fset ^ str_repeat($req[4], strlen($fset));  
-$fset = strrev($fset);
+$resout = stream_get_contents($f, 131072, -1);
+if (empty($resout)) {
+break; }
+$rrlen = $rrlen+131072;
+$resout  = $resout ^ str_repeat($req[4], strlen($resout));  
+$resout = strrev($resout);
 if  ($i == 1) {
-$fset = "".$img."".$fset."";
+$resout = "".$img."".$resout."";
 }
-fwrite($f1,$fset);
-if ($rrrstr >= $rrr) {
-break; 
-}
+fwrite($f1,$resout);
+if ($rrlen >= $rrr) {
+break; }
 }
 fclose($f1);
-$nomer++;
+$nmr++;
 $n++;
 }
 fclose($f);
-$f1 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb"); 
-$contents = fread($f1,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f1);
-}
+$f1 = fopen ("/app/".$rand."/".$randr1.".".$rzr."","rb"); 
+$cnts = fread($f1,filesize("/app/".$rand."/".$randr1.".".$rzr.""));
+fclose($f1); }
 else { 
-$__content__ = '';
-$freq = '';
-function echo_content($content) {
-global $freq;
-$freq .= $content;
+$_cnt_ = '';
+$resout = '';
+function echo_cnt($cnt) {
+global $resout;
+$resout .= $cnt;
 }
-function curl_header_function($ch, $header) {
-global $__content__;
-$pos = strpos($header, ':');
+function c_h_fun($ch, $head) {
+global $_cnt_;
+$pos = strpos($head, ':');
 if ($pos == false) {
-$__content__ .= $header;
+$_cnt_ .= $head;
 } 
 else {
-$key = join('-', array_map('ucfirst', explode('-', substr($header, 0, $pos))));
+$key = join('-', array_map('ucfirst', explode('-', substr($head, 0, $pos))));
 if ($key != 'Transfer-Encoding') {
-$__content__ .= $key . substr($header, $pos);
+$_cnt_ .= $key . substr($head, $pos);
 }
 }
-return strlen($header);
+return strlen($head);
 }
-function curl_write_function($ch, $content) {
-global $__content__;
-if ($__content__) {
-echo_content($__content__);
-$__content__ = '';
+function c_w_func($ch, $cnt) {
+global $_cnt_;
+if ($_cnt_) {
+echo_cnt($_cnt_);
+$_cnt_ = '';
 }
-echo_content($content);
-return strlen($content);
+echo_cnt($cnt);
+return strlen($cnt);
 }
-function post($met, $url, $headers, $body) {
-$curl_opt = array();
+function post($met, $url, $head, $body) {
+global $_cnt_;
+$c_opt = array();
 $ch = curl_init();
-$curl_opt[CURLOPT_URL] = $url;
+$c_opt[CURLOPT_URL] = $url;
 switch (strtoupper($met)) {  
 case 'HEAD':
-$curl_opt[CURLOPT_NOBODY] = true;
+$c_opt[CURLOPT_NOBODY] = true;
 break;
 case 'GET':
 break;
 case 'POST':
-$curl_opt[CURLOPT_POST] = true;
-$curl_opt[CURLOPT_POSTFIELDS] = $body;
+$c_opt[CURLOPT_POST] = true;
+$c_opt[CURLOPT_POSTFIELDS] = $body;
 break;
 case 'DELETE':
 case 'PATCH':
-$curl_opt[CURLOPT_CUSTOMREQUEST] = $met;
-$curl_opt[CURLOPT_POSTFIELDS] = $body;
+$c_opt[CURLOPT_CUSTOMREQUEST] = $met;
+$c_opt[CURLOPT_POSTFIELDS] = $body;
 break;
 case 'PUT':
-$curl_opt[CURLOPT_CUSTOMREQUEST] = $met;
-$curl_opt[CURLOPT_POSTFIELDS] = $body;
-$curl_opt[CURLOPT_NOBODY] = true; 
+$c_opt[CURLOPT_CUSTOMREQUEST] = $met;
+$c_opt[CURLOPT_POSTFIELDS] = $body;
+$c_opt[CURLOPT_NOBODY] = true; 
 break;
 case 'OPTIONS':
-$curl_opt[CURLOPT_CUSTOMREQUEST] = $met;
+$c_opt[CURLOPT_CUSTOMREQUEST] = $met;
 break;
 default:
-echo_content("HTTP/1.0 502\r\n\r\n" . message_html('502 Urlfetch Error', 'Method error ' . $method,  $url));
-exit(-1);
+exit();
 }
-$curl_opt[CURLOPT_HTTPHEADER] = $headers;
-$curl_opt[CURLOPT_RETURNTRANSFER] = true;
-$curl_opt[CURLOPT_BINARYTRANSFER] = true;
-$curl_opt[CURLOPT_HEADER] = false;
-$curl_opt[CURLOPT_HEADERFUNCTION] = 'curl_header_function';
-$curl_opt[CURLOPT_WRITEFUNCTION]  = 'curl_write_function';
-$curl_opt[CURLOPT_FAILONERROR]    = false;
-$curl_opt[CURLOPT_FOLLOWLOCATION] = false;
-$curl_opt[CURLOPT_SSL_VERIFYPEER] = false;
-$curl_opt[CURLOPT_SSL_VERIFYHOST] = false;
-$curl_opt[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
-curl_setopt_array($ch, $curl_opt);
+$c_opt[CURLOPT_HTTPHEADER] = $head;
+$c_opt[CURLOPT_RETURNTRANSFER] = true;
+$c_opt[CURLOPT_HEADERFUNCTION] = 'c_h_fun';
+$c_opt[CURLOPT_WRITEFUNCTION]  = 'c_w_func';
+$c_opt[CURLOPT_SSL_VERIFYPEER] = false;
+$c_opt[CURLOPT_SSL_VERIFYHOST] = false;
+$c_opt[CURLOPT_IPRESOLVE] = CURL_IPRESOLVE_V4;
+curl_setopt_array($ch, $c_opt);
 curl_exec($ch);
 curl_close($ch);
-if ($GLOBALS['__content__']) {
-echo_content($GLOBALS['__content__']);
+if ($_cnt_) {
+echo_cnt($_cnt_);
 } 
 }
-$headers = unserialize($req[3]);
-$body = unserialize($req[6]);
-post($met, $url, $headers, $body);
-$nomer = 0;
+post($req[0], $url, unserialize($req[3]), unserialize($req[6]));
 for($i=1;$i<=400;$i++) {	
-$randdrepn = "".$rand."".$i."";
-$randdrepn = rep($randdrepn);
-$fset = substr($freq, $rrr*($i-1), $rrr); 
-if (empty($fset)) {
+$randrepn = "".$rand."".$i."";
+$randrepn = rep($randrepn);
+$resout = substr($resout, $rrr*($i-1), $rrr); 
+if (empty($resout)) {
 break; }
-$nomer++;
-$fset  = $fset ^ str_repeat($req[4], strlen($fset));
-$fset = strrev($fset);
-$fset = "".$img."".$fset."";
-$f = fopen("/app/".$rand."/".$randdrepn.".".$razr."","w");
-fwrite($f,$fset);
+$nmr++;
+$resout  = $resout ^ str_repeat($req[4], strlen($resout));
+$resout = strrev($resout);
+$resout = "".$img."".$resout."";
+$f = fopen("/app/".$rand."/".$randrepn.".".$rzr."","w");
+fwrite($f,$resout);
 fclose($f); }
-$f3 = fopen ("/app/".$rand."/".$randdrep1.".".$razr."","rb");
-$contents = fread($f3,filesize("/app/".$rand."/".$randdrep1.".".$razr.""));
-fclose($f3); 
-}
-$nomer = str_pad($nomer, 3, "0", STR_PAD_LEFT);
-$nomer  = $nomer ^ str_repeat($req[4], strlen($nomer));
-$nomer = strrev($nomer);
-$contents = "".$contents."|)|</".$nomer."";
-header("Content-type: ".$contenttype[0]."");
-header("Content-Disposition: attachment; filename=".$randdrep1.".".$razr."");
-echo $contents;  
+$f = fopen ("/app/".$rand."/".$randr1.".".$rzr."","rb");
+$cnts = fread($f,filesize("/app/".$rand."/".$randr1.".".$rzr.""));
+fclose($f); }
+$nmr = str_pad($nmr, 3, "0", STR_PAD_LEFT);
+$nmr  = $nmr ^ str_repeat($req[4], strlen($nmr));
+$nmr = strrev($nmr);
+$cnts = "".$cnts."|)|</".$nmr."";
+header("Content-type: ".$ctype[0]."");
+header("Content-Disposition: attachment; filename=".$randr1.".".$rzr."");
+echo $cnts;
