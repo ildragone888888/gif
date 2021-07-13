@@ -25,10 +25,6 @@ curl_setopt($chh, CURLOPT_HEADER, false);
 $req = curl_exec($chh);
 curl_close($chh);
 $req = json_decode($req, true);
-if (!empty($req['error'])) {  
-header("Content-type: image/gif");
-header("Content-Disposition: attachment; filename=".$randdrep1.".gif");
-echo 'ny'; exit; }
 $req = $req['href'];
 $req = file_get_contents($req);
 $img  = substr($req, 0, $nomergif);
